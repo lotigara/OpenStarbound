@@ -33,7 +33,7 @@ import java.util.LinkedList;
  * offering two different ways of accessing your stored data. This would be confusing for users."
  * - http://developer.android.com/guide/topics/providers/document-provider.html#43
  */
-public class OpensbDocumentsProvider extends DocumentsProvider {
+public class MainDocumentsProvider extends DocumentsProvider {
 
     private static final String ALL_MIME_TYPES = "*/*";
 

@@ -1,7 +1,8 @@
 bin/
 lib/
 obj/
+assets/
 src/ru/lotigara/opensb/R.java
 # Because we get it in the build script
-src/org/libsdl
+src/org
 classes.dex

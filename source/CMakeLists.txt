@@ -600,11 +600,6 @@ endforeach(OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES)
 
 # External code included with starbound source, which core depends on
 set(STAR_EXTERN_INCLUDES ${PROJECT_SOURCE_DIR}/extern)
-if(STAR_SYSTEM_ANDROID)
-    set(STAR_EXTERN_INCLUDES ${STAR_EXTERN_INCLUDES}
-        ${PROJECT_SOURCE_DIR}/extern/libexecinfo
-    )
-endif()
 add_subdirectory(extern)
 
 # Core support code, not specific to starbound.
@@ -686,8 +681,8 @@ if(STAR_BUILD_GUI)
     add_custom_target(android_apk ALL
         COMMAND "${STAR_ANDROID_DIR}/build.sh" "${CMAKE_ANDROID_ARCH_ABI}" "${STAR_ANDROID_SDL3_JAR}"
         DEPENDS starbound
-	WORKING_DIRECTORY "${STAR_ANDROID_DIR}"
-	USES_TERMINAL
+        WORKING_DIRECTORY "${STAR_ANDROID_DIR}"
+        USES_TERMINAL
         COMMENT "Building Android APK"
       )
   endif()

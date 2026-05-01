@@ -34,6 +34,20 @@ Json const BaseAssetsSettings = Json::parseJson(R"JSON(
     }
   )JSON");
 
+#ifdef STAR_SYSTEM_ANDROID
+Json const AndroidBootConfig = Json::parseJson(R"JSON(
+    {
+      "assetDirectories" : [
+        "assets/",
+        "mods/"
+      ],
+
+      "storageDirectory" : "storage/",
+      "logDirectory" : "logs/"
+    }
+  )JSON");
+#endif
+
 Json const BaseDefaultConfiguration = Json::parseJson(R"JSON(
     {
       "configurationVersion" : {
@@ -162,7 +176,15 @@ pair<RootUPtr, RootLoader::Options> RootLoader::commandInitOrDie(int argc, char*
 Root::Settings RootLoader::rootSettingsForOptions(Options const& options) const {
   try {
     String bootConfigFile = options.parameters.value("bootconfig").maybeFirst().value("sbinit.config");
+#ifdef STAR_SYSTEM_ANDROID
+    Json bootConfig;
+    if (File::exists(bootConfigFile))
+      bootConfig = Json::parseJson(File::readFileString(bootConfigFile));
+    else
+      bootConfig = AndroidBootConfig;
+#else
     Json bootConfig = Json::parseJson(File::readFileString(bootConfigFile));
+#endif
 
     Json assetsSettings = jsonMerge(
         BaseAssetsSettings,

@@ -15,12 +15,13 @@ for i in "jar" "aapt" "javac" "d8" "zipalign" "apksigner"; do
   if [ $? -ne 0 ]; then echo 'build.sh: $PATH is missing Android build-tools'; exit 1; fi
 done
 
-mkdir -p bin/ lib/$ARCH_ABI
+mkdir -p bin/ lib/$ARCH_ABI assets/
+asset_packer ../assets/opensb assets/opensb.pak
 rm -rf src/org/ && jar -xf $SDL_JAR org && mv org src/
 aapt package -f -m -J ./src/ -M AndroidManifest.xml -I $PLATFORMS/android.jar -S res/
 javac -d obj -classpath src:$PLATFORMS/android.jar src/ru/lotigara/opensb/* src/org/libsdl/app/*
 d8 --output . obj/ru/lotigara/opensb/* obj/org/libsdl/app/*
-aapt package -f -m -F ./bin/opensb.unaligned.apk -M AndroidManifest.xml -I $PLATFORMS/android.jar -S res/
+aapt package -f -m -A assets/ -F ./bin/opensb.unaligned.apk -M AndroidManifest.xml -I $PLATFORMS/android.jar -S res/
 aapt add ./bin/opensb.unaligned.apk classes.dex 
 aapt add ./bin/opensb.unaligned.apk lib/$ARCH_ABI/*
 zipalign -f 4 ./bin/opensb.unaligned.apk ./bin/opensb.apk 

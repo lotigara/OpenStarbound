@@ -8,6 +8,9 @@
 #include "cpptrace/cpptrace.hpp"
 #include "cpptrace/formatting.hpp"
 #endif
+#ifdef STAR_SYSTEM_ANDROID
+#include "SDL3/SDL_messagebox.h"
+#endif
 
 namespace Star {
 
@@ -150,12 +153,17 @@ void printStack(char const* message) {
 }
 
 void fatalError(char const* message, bool showStackTrace) {
-  if (showStackTrace)
+  if (showStackTrace) {
 #ifdef STAR_USE_CPPTRACE
     Logger::error("Fatal Error: {}\n{}", message, captureBacktrace());
 #else
     Logger::error("Fatal Error: {}\n{}", message, outputStack(captureStack()));
 #endif
+#ifdef STAR_SYSTEM_ANDROID
+    String content = strf("Fatal Error: {}\n{}", message, outputStack(captureStack()));
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", content.utf8Ptr(), NULL);
+#endif
+  }
   else
     Logger::error("Fatal Error: {}", message);
 
@@ -163,12 +171,17 @@ void fatalError(char const* message, bool showStackTrace) {
 }
 
 void fatalException(std::exception const& e, bool showStackTrace) {
-  if (showStackTrace)
+  if (showStackTrace) {
 #ifdef STAR_USE_CPPTRACE
     Logger::error("Fatal Exception caught: {}\nCaught at:\n{}", outputException(e, true), captureBacktrace());
 #else
     Logger::error("Fatal Exception caught: {}\nCaught at:\n{}", outputException(e, true), outputStack(captureStack()));
 #endif
+#ifdef STAR_SYSTEM_ANDROID
+    String content = strf("Fatal Exception caught: {}\nCaught at:\n{}", outputException(e, true), outputStack(captureStack()));
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", content.utf8Ptr(), NULL);
+#endif
+  }
   else
     Logger::error("Fatal Exception caught: {}", outputException(e, showStackTrace));
 

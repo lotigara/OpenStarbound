@@ -46,13 +46,13 @@ public class MainActivity extends SDLActivity {
             Window window = getWindow();
             WindowInsetsController windowInsetsController = window.getInsetsController();
 
-	    window.setDecorFitsSystemWindows(false);
+            window.setDecorFitsSystemWindows(false);
             windowInsetsController.setSystemBarsBehavior(
                 WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
             windowInsetsController.hide(WindowInsets.Type.systemBars());
         } catch (Throwable e) {
             Log.w("starbound", "Setting immersive fullscreen mode failed");
-	    e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -79,7 +79,7 @@ public class MainActivity extends SDLActivity {
             }
         } catch (Throwable e) {
             Log.w("starbound", "Built-in asset copy failed");
-	    e.printStackTrace();
+            e.printStackTrace();
         }
 
         setFullScreen();

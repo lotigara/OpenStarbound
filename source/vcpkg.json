@@ -16,9 +16,8 @@
     "re2",
     "abseil",
     { "name": "imgui", "features": ["sdl3-binding", "opengl3-binding", "freetype"] },
-    { "name": "cpr", "version>=": "1.10.5", "features": ["ssl"], "platform": "!android" },
-    { "name": "cpr", "version>=": "1.10.5", "platform": "android" },
-    "spirv-cross",
-    "glslang"
+    { "name": "cpr", "version>=": "1.10.5", "features": ["ssl"] },
+    { "name": "spirv-cross", "platform": "android" },
+    { "name": "glslang", "platform": "android" }
   ]
 }

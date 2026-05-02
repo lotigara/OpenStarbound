@@ -549,9 +549,6 @@ if(STAR_BUILD_GUI)
   )
 
   if(STAR_SYSTEM_ANDROID)
-    set(NOEGL ON)
-    set(NO_LOADER ON)
-    set(NO_INIT_CONSTRUCTOR ON)
     add_subdirectory(${PROJECT_SOURCE_DIR}/extern/gl4es)
     include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/extern/gl4es/include)
     set(STAR_EXT_GUI_LIBS ${STAR_EXT_GUI_LIBS}

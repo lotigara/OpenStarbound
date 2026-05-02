@@ -1,7 +1,6 @@
 #!/bin/bash
 # https://lisyarus.github.io/blog/posts/porting-for-android.html#section-assembling
 
-# For future support of more architectures
 if [ -z $1 ] || [ -z $2 ]; then
   echo 'build.sh: Missing argument'; exit 1
 fi
